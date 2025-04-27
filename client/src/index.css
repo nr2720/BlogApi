@@ -1,0 +1,456 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    all: unset;
+    cursor: pointer;
+    color: #f4f4f5;
+}
+
+html {
+    font-family: 'Nunito', sans-serif;
+    font-size: 22px;
+    color: #372121;
+}
+
+body {
+    min-height: 100vh;
+    background-color: rgb(27, 35, 44);
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; 
+  padding: 1rem 0.5rem;
+}
+
+
+
+
+section {
+    width: 100%;
+    max-width: 420px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1rem;
+    background-color: rgba(0,0,0,0.4);
+    border-radius: 12px;
+}
+
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+
+textarea {
+  font-family: 'Nunito', sans-serif;
+  font-size: 22px;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+}
+
+
+
+
+
+
+.instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background: #000;
+    color: #fff;
+    padding: 0.25rem;
+    position: relative;
+    bottom: -10px;
+}
+
+.instructions > svg {
+    margin-right: 0.25rem;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
+}
+
+.hide {
+    display: none;
+}
+
+.valid {
+    color: limegreen;
+    margin-left: 0.25rem;
+}
+
+.invalid {
+    color: red;
+    margin-left: 0.25rem;
+}
+
+.errmsg {
+    background-color: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.line {
+    display: inline-block;
+}
+
+.divForm {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+
+/* POSTS */
+
+.postContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid black;
+    gap: 40px;
+}
+
+.post-title {
+    font-size: larger;
+    font-weight:500;
+}
+
+.post-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 3%;
+}
+
+.post-button {
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 10px 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.post-button:hover {
+    background-color: #e0e0e0;
+}
+
+
+
+
+/* Feed */
+
+  .feedContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 25px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .feed-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e2e2;
+    border-radius: 10px;
+    padding: 30px 30px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.2s ease;
+  }
+  .feed-card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  }
+  .feed-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #222;
+
+  }
+  .feed-content {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.5;
+    width: 95%;
+    
+  }
+
+  .feed-card-likes {
+    display: flex;
+  }
+
+  .card-likes {
+    flex-basis: 50%;
+  }
+
+  .card-dislikes {
+    flex-basis: 50%;
+  }
+
+  .comment-section {
+    background-color: #ffffff;
+    border: 1px solid #e2e2e2;
+    border-radius: 10px;
+    padding: 30px 30px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.2s ease;
+  }
+
+  .write-comm-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .userComment {
+    width: 100%;
+    height: 120px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.4;
+    vertical-align: top;
+    resize: vertical;
+    border: 1px solid #ccc;
+    border-radius: 0.4rem;
+  }
+
+  .buttonComment {
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      font-weight: 500;
+      border: none;
+      border-radius: 0.5rem;
+      background-color: #1f2937; /* dark slate */
+      color: #f4f4f5; /* soft light */
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .buttonComment:hover {
+    background-color: #374151; /* slightly lighter dark */
+    transform: scale(1.03);
+  }
+
+  .button:active {
+    transform: scale(0.97);
+  }
+
+  .button:disable {
+    background-color: #9ca3af; /* gray-400 */
+    cursor: not-allowed;
+  }
+
+  .comment{
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+
+  .buttonL, .buttonR {
+    position: relative;
+  }
+
+  .buttonSwipeLeft {
+    position: absolute;
+    right: 85%;
+    top: 40%;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 200;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #1f2937; /* dark slate */
+    color: #f4f4f5; /* soft light */
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .buttonSwipeRight {
+    position: absolute;
+    left: 85%;
+    top: 40%;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #1f2937; /* dark slate */
+    color: #f4f4f5; /* soft light */
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+ 
+
+  
+
+
+/* Header */
+
+header {
+    width: 100%;
+    border: 1px solid black;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1f2937;
+    position: fixed;
+}
+
+.links {
+    height: 100%;
+    display: flex;
+    flex-basis: 50%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 50%;
+}
+
+.logoH2 {
+    margin: 0px;
+    color: #f4f4f5 
+}
+
+
+/* dropdowen */
+
+.menu {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 10%;
+}
+
+.dropdown {
+    background-color: #e0e0e1;
+    width: 250%;
+    height: 500%;
+    position: absolute;
+    top: 160%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-radius: 10px;
+    padding: 5%
+}
+
+.dropdown-link {
+    color: black;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 40%;
+    border-radius: 12px;
+
+
+}
+
+
+
+/* Create post form */
+
+.formContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 5%;
+}
+
+.createPostForm {
+    background-color: white;
+    width: 25%;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+
+.feed > h1 {
+   margin-top: 10%;
+}
+
+.h1Feed {
+    margin-top: 5%;
+}
+
+
+
+/* information */
+
+
+.informations {
+    margin-top: 10%;
+}
+
+
+.heart-icon {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    display: inline-block;
+  }
+  
+  .heart-icon svg {
+    transition: fill 0.2s ease, transform 0.2s ease;
+  }
+  
+  .heart-icon:hover svg {
+    transform: scale(1.1);
+    fill: #f87171; /* lighter red on hover */
+  }
+  
+  .heart-icon.liked svg {
+    fill: #ef4444;
+  }
+
+  .x-icon {
+    cursor: pointer;
+    transition: transform 0.2s ease, scale 0.2s ease;
+    display: inline-block;
+  }
+  
+  .x-icon svg {
+    transition: stroke 0.2s ease, transform 0.3s ease;
+  }
+  
+  .x-icon:hover svg {
+    transform: rotate(90deg) scale(1.1);
+    stroke: #f87171; /* lighter red on hover */
+  }
+  
+  .x-icon.active svg {
+    stroke: #ef4444;
+    transform: rotate(135deg) scale(1.2);
+  }
