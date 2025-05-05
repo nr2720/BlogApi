@@ -19,6 +19,10 @@ const AuthIndex = () => {
 
   //userdata
   const [data, setData] = useState(null);
+  const [file, setFile] = useState(null);
+
+  const [fetching, setFetching] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   //function to fetch
   const getUserData = async() => {
@@ -34,7 +38,6 @@ const AuthIndex = () => {
        }
       );
       const data = response.data.data;
-       console.log(data)
       //setting the data
       setData(data);
     } catch (error) {
@@ -45,7 +48,41 @@ const AuthIndex = () => {
   //fetch the data
   useEffect(() => {
     getUserData();
-  }, [])
+    setSuccess(true);
+  }, [fetching])
+
+  //change pdp
+  const handleChangePdp = (e) => {
+    const file = e.target.files[0];
+    setFile(file);
+  }
+
+  //send new pdp
+
+  const handleSubmitPdp = async() => {
+    if(!file) {return}
+    setFetching(!fetching);
+    setSuccess(false);
+    try {
+          const formData = new FormData();
+          formData.append('file', file);
+
+          //send data
+          await axios.post('http://localhost:3000/users/pdp', 
+            formData,
+            {
+                headers: { 
+                  'Authorization' : token,
+              },
+                withCredentials: true
+            }
+        );
+        
+      
+    } catch (error) {
+      return;
+    }
+  }
   
   return (
     <>
@@ -53,12 +90,31 @@ const AuthIndex = () => {
         <>  
           <Header />
           <div className ="informations">
-            <h1>Welcome, {data.username}</h1>
-            <p>Your information are here:</p>
-            <p>First name: {data.first_name}</p>
-            <p>Last name: {data.last_name}</p>
-            <p>Email: {data.email}</p>
-            <p>Phone number : {data.phone}</p>
+            <div className="information-up">
+              <h1>Welcome, {data.username}</h1>
+            </div>
+
+            <div className="information-down">
+
+              <div className="info-down-left">
+                {success ?
+                  <>
+                    <img className='avatar-info' src={data.profile_picture} alt="Avatar" />
+                    <input onChange={handleChangePdp} type="file" name="change-avatar" id="change-avatar"/>
+                    <button onClick={handleSubmitPdp}>Submit</button>
+                  </> : <>Loading ...</>
+            
+                }
+              </div>
+
+              <div className="info-down-right">
+                <p>First name: {data.first_name}</p>
+                <p>Last name: {data.last_name}</p>
+                <p>Email: {data.email}</p>
+                <p>Phone number : {data.phone}</p>
+              </div>
+
+            </div>
           </div>
         </> 
     

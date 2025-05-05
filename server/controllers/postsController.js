@@ -79,7 +79,6 @@ const modifyPost = async(req, res) => {
     const userId = req.user.id;
     try {
         //create the post
-        console.log(req.body.postId)
         const result = await prisma.modifyPost(req.body.postId ,req.body.post_title, req.body.post_content, userId);
 
         //return error if error

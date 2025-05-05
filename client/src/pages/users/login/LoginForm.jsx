@@ -7,6 +7,7 @@ import { useAuth } from '../../../components/AuthProvider';
 import { useNavigate } from "react-router-dom";
 
 import React from 'react'
+import Header from "../../../components/Header";
 
 const LoginForm = () => {
     //state for username
@@ -20,7 +21,7 @@ const LoginForm = () => {
 
     const handleLogin = (token) => {
         changeToken(token);
-        navigate('/home', {replace: true});
+        navigate('/feed', {replace: true});
       }
 
 
@@ -65,9 +66,9 @@ const LoginForm = () => {
         {success ? (
             <p>Welcome, {username}!</p>
         ) : (
-        <section>   
-            <h1>Login</h1>
-            <form>
+            <>
+            <form className="login-form">
+            <h2 className="login-title">Login here</h2>
                 <label htmlFor="username">
                     Username:
                 </label>
@@ -91,7 +92,7 @@ const LoginForm = () => {
                 <br></br>
                 <button onClick={handleSubmit}>Submit</button>
             </form>
-        </section>
+            </>
         )}
     </>
   )

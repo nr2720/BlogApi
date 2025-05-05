@@ -4,10 +4,11 @@ import {Link} from 'react-router-dom'
 
 import {useState, useRef, useEffect} from 'react';
 
-const Header = () => {
+const Header = ({notLogged}) => {
   //profile state
   const [profileClicked, setProfileClick] = useState(false);
   const [postClicked, setPostClick] = useState(false);
+  const [logged, setLogged] = useState(notLogged);
 
   const dropdownRef = useRef(null);
 
@@ -37,9 +38,10 @@ const Header = () => {
   return (
     <header>
         <div className="logo">
-        <Link className='logoH2' to='/feed'>Faux Dilemme</Link>
+        <Link className='logoH2' to='/feed'>ChumBook</Link>
         </div>
-        <div className="links" ref={dropdownRef}>
+        {!notLogged ?        
+         <div className="links" ref={dropdownRef}>
             <div className="menu">
                 {!profileClicked 
                 ? 
@@ -77,7 +79,20 @@ const Header = () => {
         <Link to='/logout'>Logout</Link>
 
             
+        </div> 
+        
+        :
+      
+        <>
+        <div className="links" ref={dropdownRef}>
+        <Link to='/register'>Register</Link>
+        <Link to='/login'>Login</Link>
+
+            
         </div>
+        
+        </>}
+
     </header>
   )
 }

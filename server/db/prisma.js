@@ -3,6 +3,8 @@ const prisma = new PrismaClient()
 
 const asyncHandler = require('express-async-handler');
 
+const cloudinary = require('../db/cloudinary');
+
 //General
 const getAllUsers = asyncHandler(async() => {
     const users = await prisma.users.findMany()
@@ -189,14 +191,14 @@ const getAllPosts = async() => {
 const addALike = async(postId, userId) => {
     try {
         //check if the like is already alimenté
-        const like = await prisma.likes.findUnique({
+        const like = await prisma.likes.findFirst({
             where: {
                 post_id: postId,
                 user_id: userId,
             }
         })
         //same shit with the dislike
-        const dislike = await prisma.dislikes.findUnique({
+        const dislike = await prisma.dislikes.findFirst({
             where: {
                 post_id: postId,
                 user_id: userId,
@@ -209,7 +211,7 @@ const addALike = async(postId, userId) => {
             //delete the dislike
             await prisma.dislikes.delete({
                 where: {
-                    post_id: postId,
+                    id: dislike.id,
                 }
             });
         }
@@ -232,14 +234,14 @@ const addALike = async(postId, userId) => {
 const addADislike = async(postId, userId) => {
     try {
         //check if the like is already alimenté
-        const like = await prisma.likes.findUnique({
+        const like = await prisma.likes.findFirst({
             where: {
                 post_id: postId,
                 user_id: userId,
             }
         })
         //same shit with the dislike
-        const dislike = await prisma.dislikes.findUnique({
+        const dislike = await prisma.dislikes.findFirst({
             where: {
                 post_id: postId,
                 user_id: userId,
@@ -252,18 +254,18 @@ const addADislike = async(postId, userId) => {
             //delete the like
             await prisma.likes.delete({
                 where: {
-                    post_id: postId,
+                    id: like.id,
                 }
             });
         }
 
-            //add the dislike
-            await prisma.dislikes.create({
-                data: {
-                    user_id: userId,
-                    post_id: postId,
-                }
-            });
+        //add the dislike
+        await prisma.dislikes.create({
+            data: {
+                user_id: userId,
+                post_id: postId,
+            }
+        });
             return;
     } catch (error) {
         console.error(error);
@@ -301,13 +303,13 @@ const getLikesDislikeFromPost = async(postId) => {
 
 const checkUIntsFromPost = async(postId, userId) => {
     try {
-        const likes = await prisma.likes.findUnique({
+        const likes = await prisma.likes.findFirst({
             where: {
                 post_id: postId,
                 user_id: userId,
             }
         })
-        const dislikes = await prisma.dislikes.findUnique({
+        const dislikes = await prisma.dislikes.findFirst({
             where: {
                 post_id: postId,
                 user_id: userId,
@@ -367,6 +369,52 @@ const getAllCommentsFromPost = async(post_id) => {
 }
 
 
+
+
+//pdp
+
+const changePdp = async(user_id, file) => {
+    try {
+        //get the upload
+        const cloudFile = await cloudinary.uploadImg(file);
+        const url = await cloudinary.getUrl(cloudFile);
+
+        await prisma.users.update({
+            where: {
+                id: user_id,
+            },
+            data: {
+                profile_picture: url,
+            }
+        })
+        
+        return true;
+        
+    } catch (error) {
+        console.error(error);
+        return;
+    }
+}
+
+
+
+//delete comm
+
+const deleteCommWithId = async(comm_id) => {
+    await prisma.comments.delete({
+        where: {
+            id: comm_id
+        }
+    });
+}
+
+
+
+
+
+
+
+
 module.exports = {
     getAllUsers,
     getUserById,
@@ -383,5 +431,7 @@ module.exports = {
     getLikesDislikeFromPost,
     checkUIntsFromPost,
     createComments,
-    getAllCommentsFromPost
+    getAllCommentsFromPost,
+    changePdp,
+    deleteCommWithId
 }

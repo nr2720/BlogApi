@@ -106,20 +106,26 @@ const LikeDislikeToggle = ({ postId, alreadyLiked, alreadyDisliked }) => {
           className={`heart-icon ${status === 'like' ? 'liked' : ''}`}
           onClick={() => handleToggle('like')}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="50"
-            height="50"
-            viewBox="0 0 24 24"
-            fill={status === 'like' ? '#ef4444' : 'none'}
-            stroke="#ef4444"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="feather feather-heart"
-          >
-            <path d="M20.8 4.6c-1.9-1.7-4.9-1.6-6.7.3l-.9.9-.9-.9C10.5 3 7.5 2.9 5.6 4.6c-2 1.8-2.1 4.8-.2 6.7l7.5 7.6 7.5-7.6c1.9-1.9 1.8-4.9-.1-6.7z" />
-          </svg>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="50"
+  height="50"
+  viewBox="0 0 24 24"
+  style={{ pointerEvents: 'none' }}
+  className="like-icon"
+>
+  <circle cx="12" cy="12" r="10" fill="#dcfce7" />
+  <polyline
+    points="9 12 12 15 16 9"
+    fill="none"
+    stroke="#22c55e"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  />
+</svg>
+
+
         </div>
         <p>{!status ? <></> : intsData.likes.length}</p>
       </div>
@@ -129,21 +135,38 @@ const LikeDislikeToggle = ({ postId, alreadyLiked, alreadyDisliked }) => {
           className={`x-icon ${status === 'dislike' ? 'active' : ''}`}
           onClick={() => handleToggle('dislike')}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="50"
-            height="50"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#ef4444"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="feather feather-x"
-          >
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="50"
+  height="50"
+  viewBox="0 0 24 24"
+  style={{ pointerEvents: 'none' }}
+  className="dislike-icon"
+>
+  <circle cx="12" cy="12" r="10" fill="#fee2e2" />
+  <line
+    x1="9"
+    y1="9"
+    x2="15"
+    y2="15"
+    stroke="#ef4444"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  />
+  <line
+    x1="15"
+    y1="9"
+    x2="9"
+    y2="15"
+    stroke="#ef4444"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  />
+</svg>
+
+
         </div>
         <p>{!status ? <></> : intsData.dislikes.length}</p>
       </div>

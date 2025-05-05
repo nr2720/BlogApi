@@ -8,6 +8,7 @@ import axios from '../api/axios';
 import AllComments from './AllComments';
 
 const commentUrl = 'http://localhost:3000/comments';
+const authUrl = 'http://localhost:3000/comments/auth';
 
 export const CommentsSection = ({post}) => {
   const [userWants, setUserWants] = useState(false);
@@ -22,10 +23,17 @@ export const CommentsSection = ({post}) => {
   //get the token
   const auth = useAuth();
   const [token, setToken] = useState(auth.token);
+  
+
+
 
   const [addComment, setAddComment] = useState(false);
 
     const handleClick = async() => {
+        const str = userComment.split('');
+        if (str.length < 10) {
+            return;
+        }
         try {
         await axios.post(commentUrl, 
         JSON.stringify({
@@ -41,6 +49,7 @@ export const CommentsSection = ({post}) => {
         });
 
         setAddComment(!addComment);
+        setUserComment('');
         setUserWants(false);
             
         } catch (error) {
@@ -80,6 +89,10 @@ export const CommentsSection = ({post}) => {
         setIsLoading(false);
     }, [addComment, activePost]) 
 
+    const refetch = () => {
+        setAddComment(!addComment);
+    }
+
   return (
     !userWants && !isLoading
     
@@ -89,14 +102,14 @@ export const CommentsSection = ({post}) => {
     <div className="comment-section">
         <button onClick={() => setUserWants(true)} className='buttonComment'> Comment </button>
     </div>
-    <AllComments comments={allComments}/>
+    <AllComments comments={allComments} refetch={refetch}/>
     </>
     : !isLoading ?
     <>
     <div className='comment-section'>
         <div className="writingComm">
             <form onSubmit={(e) => e.preventDefault()} className='write-comm-form'>
-                <textarea className="userComment" onChange={(e) => setUserComment(e.target.value)} placeholder="Write your post..." />
+                <textarea minLength={20} maxLength={200} required className="userComment" onChange={(e) => setUserComment(e.target.value)} placeholder="Write your post..." />
                 <button className='buttonComment' onClick={handleClick}> Post</button>
             </form>
         </div>

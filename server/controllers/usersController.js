@@ -4,7 +4,9 @@ const asyncHandler = require('express-async-handler');
 const utils = require('../crypto/utils');
 const prisma = require('../db/prisma');
 
+
 const session = require('express-session');
+
 
 
 
@@ -43,11 +45,17 @@ const registerPost = asyncHandler(async(req, res) => {
         })
             
         } catch (error) {
-            console.err(error);
+            res.status(500).json({
+            });
+            console.error(error);
             return;
         }
     })
-    .catch(error => next(err))
+    .catch(error => {
+        res.json({
+            error: 'Username or Email already taken.'
+        })
+    })
 })
 
 
@@ -104,12 +112,14 @@ const loginPost = async(req, res) => {
 //users/protected -- profile page here, get information from the user
 const protectedGet = async(req, res) => {
     try {
+        
         const data = {
             username: req.user.username,
             first_name: req.user.first_name,
             last_name: req.user.last_name,
             email: req.user.email,
             phone: req.user.phone_number,
+            profile_picture: req.user.profile_picture,
         }
         res.json({
             success: true,
@@ -123,6 +133,27 @@ const protectedGet = async(req, res) => {
         })
         return;
     }
+}
+
+
+
+
+const pdpPost = async(req, res) => {
+    try {
+        await prisma.changePdp(req.user.id, req.file.path);
+        res.json({
+            success: true,
+        })
+        
+        
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error,
+        })
+    }
+
+
 }
 
 
@@ -151,4 +182,5 @@ module.exports = {
     loginGet,
     loginPost,
     protectedGet,
+    pdpPost
 }

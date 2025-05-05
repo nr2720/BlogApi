@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 const passport = require('passport');
 
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' })
+
 //controller
 const usersController = require('../controllers/usersController');
 
@@ -22,5 +25,10 @@ router.post('/login', usersController.loginPost);
 
 //users/protected
 router.get('/protected', passport.authenticate('jwt', {session: false}), usersController.protectedGet);
+
+
+
+//users/pdp
+router.post('/pdp',passport.authenticate('jwt', {session: false}), upload.single('file'), usersController.pdpPost);
 
 module.exports = router;

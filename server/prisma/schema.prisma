@@ -22,6 +22,7 @@ model posts {
 
 model users {
   id           Int       @id @default(autoincrement())
+  profile_picture String @default("https://res.cloudinary.com/dnfb6gke7/image/upload/v1746150576/blank-profile-picture-973460_960_720-1_kvveqn.png")
   status       String    @db.VarChar(50) @default("user")
   username     String    @unique @db.VarChar(255)
   user_hash    String?   @db.VarChar(255)
@@ -50,7 +51,7 @@ model likes {
   id           Int       @id @default(autoincrement())
   user_id      Int?
   users        users?    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user")
-  post_id      Int?      @unique
+  post_id      Int?      
   posts        posts?    @relation(fields: [post_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_post")
 }
 
@@ -58,7 +59,7 @@ model dislikes {
   id           Int       @id @default(autoincrement())
   user_id      Int?
   users        users?    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user")
-  post_id      Int?      @unique
+  post_id      Int?      
   posts        posts?    @relation(fields: [post_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_post")
 }
 

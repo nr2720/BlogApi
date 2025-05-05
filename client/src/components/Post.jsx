@@ -16,7 +16,6 @@ const Post = ({ post, onDelete, onModify }) => {
       setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    console.log(post);
 
     return (
       !isModified ?

@@ -8,7 +8,7 @@ const Feed = () => {
   return (
     <div className="feed">
       <Header />
-      <h1>Parcourir les idées ...</h1>
+      <h1>S'ten pense </h1>
       <FeedPosts/>
     </div>
   )

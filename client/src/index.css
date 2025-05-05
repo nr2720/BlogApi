@@ -57,7 +57,9 @@ textarea {
   font-family: 'Nunito', sans-serif;
   font-size: 22px;
   padding: 0.25rem;
-  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  max-width: 100%;
 }
 
 
@@ -190,9 +192,34 @@ textarea {
     font-size: 1rem;
     color: #555;
     line-height: 1.5;
-    width: 95%;
-    
+    width: 100%;
+    text-align: justify;
+    padding: 20px;
+    min-height: 50px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
   }
+
+  .feed-content-username {
+    
+    font-size: 1rem;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    color: #555;
+    line-height: 1.5;
+    flex-basis: 20%;
+  }
+
+  .post-username{
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  } 
+
+
+
 
   .feed-card-likes {
     display: flex;
@@ -213,6 +240,27 @@ textarea {
     padding: 30px 30px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
     transition: box-shadow 0.2s ease;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 0;
+  }
+
+
+  .comment-right {
+    flex-basis: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .comment-left {
+    flex-basis: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
   }
 
   .write-comm-form {
@@ -318,6 +366,7 @@ header {
     justify-content: center;
     background-color: #1f2937;
     position: fixed;
+    z-index: 2;
 }
 
 .links {
@@ -413,7 +462,64 @@ header {
 
 .informations {
     margin-top: 10%;
+    background-color: #e8e8eb;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    padding: 2%
 }
+
+.information-up {
+  flex-basis: 20%;
+
+}
+
+.information-down {
+  flex-basis: 80%;
+
+  display: flex;
+}
+
+  /* avatar */
+
+  .avatar-info {
+    height: 85px;
+    width: 85px;
+    border-radius: 100%;
+  }
+
+  .avatar-info-post {
+    height: 65px;
+    width: 65px;
+    border-radius: 100%;
+  }
+
+  .info-down-left {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-basis: 40%;
+  }
+
+
+  .info-down-right{
+    display: flex;
+    align-items:flex-start;
+    flex-direction: column;
+    justify-content: center;
+    flex-basis: 60%;
+  }
+
+  #change-avatar {
+    display: flex;
+    flex-direction: column;
+  }
+
+
+
+
+
+
 
 
 .heart-icon {
@@ -428,12 +534,10 @@ header {
   
   .heart-icon:hover svg {
     transform: scale(1.1);
-    fill: #f87171; /* lighter red on hover */
+
   }
   
-  .heart-icon.liked svg {
-    fill: #ef4444;
-  }
+ 
 
   .x-icon {
     cursor: pointer;
@@ -452,5 +556,258 @@ header {
   
   .x-icon.active svg {
     stroke: #ef4444;
-    transform: rotate(135deg) scale(1.2);
+    transform: rotate(180deg) scale(1.2);
   }
+
+
+
+
+  /* Register */
+  .register-page {
+    display: flex;
+  }
+
+
+  /* .register-left {
+    flex-basis: 50%;
+  } */
+
+  .register-container {
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+
+  .form-register {
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+    border: 1px solid #e5e7eb; /* Tailwind gray-200 */
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    background-color: white;
+    
+  }
+
+.form-register button{
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #3b82f6; /* blue-500 */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+
+
+
+  .register-text {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 5%;
+    max-width: 35%;
+    height: 100%;
+    justify-content: center;
+  }
+
+
+
+  .login-form {
+    max-width: 400px;
+    padding: 2rem;
+    border: 1px solid #e5e7eb; /* Tailwind gray-200 */
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+
+  
+  .login-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #374151; /* Tailwind gray-700 */
+  }
+  
+  .login-form input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #d1d5db; /* gray-300 */
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.2s ease;
+  }
+  
+  .login-form input:focus {
+    border-color: #3b82f6; /* blue-500 */
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  }
+  
+  .login-form button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #3b82f6; /* blue-500 */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .login-form button:hover {
+    background-color: #2563eb; /* blue-600 */
+  }
+  
+  .login-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+
+
+  .comDelete {
+    position: absolute;
+    right: 2%;
+    top: 10%;
+    background-color: #f0f0f0;
+    color: #333;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  
+
+
+
+
+
+/* media */
+
+
+
+@media (max-width: 500px) {
+  /* Small devices: tablets */
+.feed{
+  height: 100%;
+}
+
+#root {
+  max-width: 500px;
+}
+
+.feed > h1 {
+  margin-top: 120px;
+}
+
+header {
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+}
+
+.links {
+  width: 100%;
+}
+
+.dropdown {
+  width: 150px;
+
+}
+
+.informations {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.information-up {
+  margin-top: 20% ;
+}
+
+.info-down-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-down-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.information-down {
+  display: flex;
+  flex-direction: column;
+}
+
+.createPostForm {
+  width: 100%;
+}
+
+
+.register-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15%;
+  gap: 50px;
+}
+
+
+.register-text {
+  width: 100%;
+  max-width: 100%;
+
+}
+
+.h1Feed {
+  margin-top: 50px;
+}
+
+.post-username {
+  gap: 10px;
+}
+
+
+.buttonSwipeRight {
+display: none;
+}
+
+.comment-section {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;align-items: center;
+}
+
+.comment-section > .buttonComment {
+  height: 50px;
+}
+
+.comment-comment {
+   margin: 20px;
+}
+
+
+
+
+}
+

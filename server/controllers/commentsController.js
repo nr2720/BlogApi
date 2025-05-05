@@ -26,7 +26,6 @@ const postCreateComm = async(req, res) => {
 const getComm = async(req, res) => {
     try {
         const post_id = parseInt(req.query.post_id);
-        console.log(req.query.post_id);
         const comments = await prisma.getAllCommentsFromPost(post_id);
         res.json({
             success: true,
@@ -40,8 +39,27 @@ const getComm = async(req, res) => {
     }
 }
 
+const deleteComm = async(req, res) => {
+    try {
+        const com_id = parseInt(req.body.comId);
+        //delete comm
+        await prisma.deleteCommWithId(com_id);
+        res.json({
+            success: true,
+        })
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            error,
+        })
+        return error
+    }
+}
+
 
 module.exports = {
     postCreateComm,
-    getComm
+    getComm,
+    deleteComm
 }

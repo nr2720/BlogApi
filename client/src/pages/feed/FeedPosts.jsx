@@ -75,7 +75,11 @@ const [token, setToken] = useState(auth.token);
 
 
   return (
-    pageLoad && posts.length === 0 ? <div>...</div> : success && posts.length === 0 ? <div>No posts.</div> :
+    pageLoad && posts.length === 0 ? <div className='feedContainer'>
+      <h2>
+       No post yet.
+      </h2>
+    </div>  :
     <div className='feedContainer'>
           <>
 

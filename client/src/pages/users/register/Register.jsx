@@ -2,18 +2,27 @@ import { useRef, useState, useEffect } from "react";
 import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import axios from '../../../api/axios'
+import { useNavigate } from "react-router-dom";
+
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const REGISTER_URL = '/register';
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const register_url = 'http://localhost:3000/users/register';
 
 import React from 'react'
+import Header from "../../../components/Header";
+import LoginForm from "../login/LoginForm";
 
 const Register = () => {
     const userRef = useRef();
     const errRef = useRef();
+
+
+    //state for login/register
+    const [userChoice, setUserChoice] = useState('Login');
 
     //state for user
     const [user, setUser] = useState('');
@@ -40,6 +49,17 @@ const Register = () => {
     //state for error/success
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
+
+    const [already, setAlready] = useState(false);
+
+    //navigate
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (success) {
+          navigate('/feed'); // replace with your actual route
+        }
+      }, [success, navigate]);
 
     //useEffects
     useEffect(() => {
@@ -74,8 +94,9 @@ const Register = () => {
             //if button enabled js hack
             const v1 = USER_REGEX.test(user);
             const v2 = PWD_REGEX.test(pwd);
+            const emailValid = emailRegex.test(email)
     
-            if(!v1 || !v2) {
+            if(!v1 || !v2 || !emailValid || !validMatch) {
                 setErrMsg('Invalid entry');
                 return;
             }
@@ -95,15 +116,28 @@ const Register = () => {
                     withCredentials: true
                 }
             );
-            console.log(response.data);
-            console.log(response.accessToken);
-            console.log(JSON.stringify(response));
             setSuccess(true);
 
         } catch (error) {
             console.error(error);
             setSuccess(false);
+            setAlready(true);
             return;
+        }
+    }
+
+    //change log-in/register
+
+    const handleButtonClick = (e) => {
+        switch(userChoice) {
+            case 'Login':
+                setUserChoice('Register');
+                break;
+            case 'Register':
+                setUserChoice('Login');
+                break;
+            default:
+                break;
         }
     }
 
@@ -112,90 +146,112 @@ const Register = () => {
   return (
     <>    
         {success ? (
-            <p>Success</p>
+            <>Yo</>
+
         ) : (
-        <section>
+        <>
+            < Header notLogged={true}/>
             <p ref={errRef} className={errMsg ? 'errMsg' : 'offscreen'} aria-live="assertive">{errMsg}</p>
             <h1>Register</h1>
-            <form>
-                <label htmlFor="username">
-                    Username:
-                </label>
-                <input 
-                    type="text"
-                    id="username"
-                    ref={userRef}
-                    autoComplete="off"
-                    onChange={(e) => setUser(e.target.value)}
-                    required
-                    aria-invalid={validName ? 'false' : 'true'}
-                    aria-aria-describedby="uidnote"
-                    onFocus={() => setUserFocus(true)}
-                    onBlur={() => setUserFocus(false)}            
-                />
 
-                <p id="uidnote" className={userFocus && user && !validName ? 'instruction' : 'offscreen'}>
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    4 to 24 characters. <br />
-                    Must begin with a letter. <br />
-                    Letters, numbers, underscores, hyphens allowed.
-                </p>
-                <label htmlFor="password">
-                    Password
-                </label>
-                <input 
-                    type="password"
-                    id="password"
-                    autoComplete="off"
-                    onChange={(e) => setPwd(e.target.value)}
-                    required
-                    aria-invalid={validName ? 'false' : 'true'}
-                    aria-aria-describedby="uidnote"
-                    onFocus={() => setPwdFocus(true)}
-                    onBlur={() => setPwdFocus(false)}            
-                />
-                <p id="uidnote" className={pwdFocus && user && !validPwd ? 'instruction' : 'offscreen'}>
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    Password too weak.
-                </p>
-                
-                <label htmlFor="match">
-                    Confirm password
-                </label>
-                <input 
-                    type="password"
-                    id="match"
-                    autoComplete="off"
-                    onChange={(e) => setMatchPwd(e.target.value)}
-                    required
-                    aria-invalid={validName ? 'false' : 'true'}
-                    aria-aria-describedby="uidnote"
-                    onFocus={() => setMatchFocus(true)}
-                    onBlur={() => setMatchFocus(false)}            
-                />
+            <div className="register-container">
+                <div className="register-text">
+                    <h2>Projet par Nate</h2>
+                    <br />
+                    <p>Crée un compte, log toi puis intéragis avec les chums</p><br />
 
-                <p id="uidnote" className={matchFocus && user && !validMatch ? 'instruction' : 'offscreen'}>
-                    <FontAwesomeIcon icon={faInfoCircle} />
-                    Passwords doesnt match.
-                </p>
+                    <p>Fait pas attention au design, le but ici est de seulement se concentrer sur les fonctionnalités logiques. Ma façon de 
+                        travailler est la suivante : build first, design later. 
+                    </p>
+                    <br />
 
-                <label htmlFor="firstName">First name</label>
-                <input type="text" name="firtName" onChange={e => setFirstName(e.target.value)} required />
+                    <button onClick={handleButtonClick} className="post-button">{userChoice}</button>
 
-                <label htmlFor="lastName">Last name</label>
-                <input type="text" name="LastName" onChange={e => setLastName(e.target.value)}required />
+                </div>
+                { userChoice === 'Login' ? <form className="form-register">
+                {already ? <p className="errMsg">Username/Email already taken</p> : <></>}
+                    <label htmlFor="username">
+                        Username:
+                    </label>
+                    <input 
+                        type="text"
+                        id="username"
+                        ref={userRef}
+                        autoComplete="off"
+                        onChange={(e) => setUser(e.target.value)}
+                        required
+                        aria-invalid={validName ? 'false' : 'true'}
+                        aria-aria-describedby="uidnote"
+                        onFocus={() => setUserFocus(true)}
+                        onBlur={() => setUserFocus(false)}            
+                    />
+            
+                    <p id="uidnote" className={userFocus && user && !validName ? 'instruction' : 'offscreen'}>
+                        <FontAwesomeIcon icon={faInfoCircle} />
+                        4 to 24 characters. <br />
+                        Must begin with a letter. <br />
+                        Letters, numbers, underscores, hyphens allowed.
+                    </p>
+                    <label htmlFor="password">
+                        Password
+                    </label>
+                    <input 
+                        type="password"
+                        id="password"
+                        autoComplete="off"
+                        onChange={(e) => setPwd(e.target.value)}
+                        required
+                        aria-invalid={validName ? 'false' : 'true'}
+                        aria-aria-describedby="uidnote"
+                        onFocus={() => setPwdFocus(true)}
+                        onBlur={() => setPwdFocus(false)}            
+                    />
+                    <p id="uidnote" className={pwdFocus && user && !validPwd ? 'instruction' : 'offscreen'}>
+                        <FontAwesomeIcon icon={faInfoCircle} />
+                        Password too weak.
+                    </p>
+                    
+                    <label htmlFor="match">
+                        Confirm password
+                    </label>
+                    <input 
+                        type="password"
+                        id="match"
+                        autoComplete="off"
+                        onChange={(e) => setMatchPwd(e.target.value)}
+                        required
+                        aria-invalid={validName ? 'false' : 'true'}
+                        aria-aria-describedby="uidnote"
+                        onFocus={() => setMatchFocus(true)}
+                        onBlur={() => setMatchFocus(false)}            
+                    />
 
-                <label htmlFor="email">Eamil</label>
-                <input type="email" name="email" onChange={e => setEmail(e.target.value)} required />
+                    <p id="uidnote" className={matchFocus && user && !validMatch ? 'instruction' : 'offscreen'}>
+                        <FontAwesomeIcon icon={faInfoCircle} />
+                        Passwords doesnt match.
+                    </p>
+
+                    <label htmlFor="firstName">First name</label>
+                    <input type="text" name="firtName" onChange={e => setFirstName(e.target.value)} required />
+
+                    <label htmlFor="lastName">Last name</label>
+                    <input type="text" name="LastName" onChange={e => setLastName(e.target.value)}required />
+
+                    <label htmlFor="email">Email</label>
+                    <input type="email" name="email" onChange={e => setEmail(e.target.value)} required />
 
 
-                <label htmlFor="phone">Phone number</label>
-                <input type="number" name="phone" onChange={e => setPhoneNumber(e.target.value)} required />
+                    <label htmlFor="phone">Phone number</label>
+                    <input type="number" name="phone" onChange={e => setPhoneNumber(e.target.value)} required />
 
-                <br></br>
-                <button onClick={handleSubmit}>Submit</button>
-            </form>
-        </section>
+                    <br></br>
+                    <button className="post-button" onClick={handleSubmit}>Submit</button>
+                </form> : 
+                <>
+                <LoginForm />
+                </>}
+            </div>
+        </>
         )}
     </>
   )
